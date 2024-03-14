@@ -62,6 +62,10 @@ client.on('call', async (call) => {
 app.use(express.static('public'))
 
 app.get('/', function (req, res) {
+    res.send('KeshavSoft');
+});
+
+app.get('/AboutUs', function (req, res) {
     res.send('KeshavSoft Web Whatsapp implementation');
 });
 
