@@ -18,7 +18,13 @@
         <!-- place navbar here -->
     </header>
     <main>
-        <canvas id="CanvasId" width=1 height=1 style="border:1px solid #fff;visibility:hidden"></canvas>
+        <div class="row">
+            <div class="col" style="display: flex; align-items: center; justify-content: center;">
+
+                <canvas id="CanvasId" width=1 height=1 style=" border:1px solid #fff;visibility:hidden"></canvas>
+            </div>
+        </div>
+
     </main>
     <footer>
         <!-- place footer here -->
@@ -31,6 +37,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
+    <script src="./index/Js/bwip-js-min.js"></script>
+
+    <script>
+
+        let jFCreateQrCode = ({ inQrCode }) => {
+            var canvas = document.getElementById("CanvasId");
+            canvas.height = 1;
+            canvas.width = 1;
+            canvas.style.visibility = 'hidden';
+
+            // Convert the options to an object.
+            let opts = {};
+
+            // Finish up the options
+            opts.text = inQrCode;
+            opts.bcid = "qrcode";
+            opts.scaleX = 1;
+            opts.scaleY = 1;
+            opts.rotate = "N";
+
+            // Draw the bar code to the canvas
+            try {
+                let ts0 = new Date;
+                bwipjs.toCanvas(canvas, opts);
+                show(ts0, new Date);
+            } catch (e) {
+                console.log("error : ", e);
+
+                return;
+            }
+
+            function show(ts0, ts1) {
+                canvas.style.visibility = 'visible';
+            }
+        };
+
+        let jFGetCode = async () => {
+            let resource = "/getCode";
+            const response = await fetch(resource);
+            let jVarLocalFromResponse = await response.text();
+
+            jFCreateQrCode({ inQrCode: jVarLocalFromResponse });
+        };
+
+        jFGetCode().then();
+    </script>
 </body>
 
 </html>

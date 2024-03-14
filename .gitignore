@@ -5,3 +5,5 @@ bin/
 KData/
 
 .env
+
+.wwebjs_cache
