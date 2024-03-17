@@ -34,7 +34,28 @@ client.on('message_create', async (msg) => {
 
 client.on('ready', () => {
     console.log('Client is ready!');
+    k1().then();
 });
+
+let k1 = async () => {
+    let chat_activos = await client.getChats();
+  
+    for (const n_chat of chat_activos) {
+
+        var n_id = n_chat.id;
+        let mensajes_verificar = await n_chat.fetchMessages();
+
+        for (const n_chat_mensaje of mensajes_verificar) {
+            console.log("chat_activos : ", n_chat_mensaje.body);
+
+            // if (!n_chat_mensaje.isGroup) {
+            //     es_grupo = 'N';
+            // } else {
+            //     es_grupo = 'S';
+            // }
+        }
+    }
+};
 
 client.on('message', msg => {
     console.log("aa : ", msg.from, msg.body);
