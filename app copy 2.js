@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { Client } from 'whatsapp-web.js';
+import qrcode from "qrcode";
 
 const app = express();
 var port = normalizePort(process.env.PORT || '7001');
@@ -16,7 +17,7 @@ app.get("/k1", (req, res) => {
     res.end("this is k1");
 });
 
-app.get('/getCode', async (req, res) => {
+app.get('/init', async (req, res) => {
     if (client) {
         res.json({ status: 'Client already initialized' });
         return;
@@ -26,8 +27,11 @@ app.get('/getCode', async (req, res) => {
 
     client.on('qr', async (qr) => {
         try {
+            // Convert QR code to data URL
+            const qrDataURL = await qrcode.toDataURL(qr);
+            app.locals.qrCode = qrDataURL;
             console.log('QR Code received:', qr);
-            res.end(qr);
+            res.end(qrDataURL);
         } catch (err) {
             console.error('QR Code generation failed:', err);
         }
@@ -39,27 +43,6 @@ app.get('/getCode', async (req, res) => {
     });
 
     await client.initialize();
-});
-
-app.get('/sendMulti', async (req, res) => {
-    // const { number, message } = req.body;
-    const number = "+918143779221";
-    const message = "Test from KeshavSoft";
-
-    if (!isReady) {
-        res.status(400).json({ error: 'Client not ready' });
-        return;
-    };
-
-    try {
-        const chatId = number.substring(1) + "@c.us";
-        await client.sendMessage(chatId, message);
-        await client.sendMessage("+919030711344".substring(1) + "@c.us", "this is 2nd");
-
-        res.json({ status: 'Message sent successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to send message' });
-    }
 });
 
 function normalizePort(val) {

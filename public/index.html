@@ -78,6 +78,7 @@
             let resource = "/getCode";
             const response = await fetch(resource);
             let jVarLocalFromResponse = await response.text();
+            console.log("jVarLocalFromResponse : ", jVarLocalFromResponse);
 
             jFCreateQrCode({ inQrCode: jVarLocalFromResponse });
         };
