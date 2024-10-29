@@ -3,13 +3,11 @@ import { StartFunc as CommoninsertToClients } from './insertToClients.js';
 import { StartFunc as CommonOnMessage } from "./OnMessage/EntryFile.js";
 
 let wss;
-let CommonClientInfo;
 
 const clients = new Map();
 const CommonChatLog = [];
 
 let StartFunc = (server) => {
-
     wss = new WebSocketServer({ server });
 
     wss.on("connection", WsOnConnection);

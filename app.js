@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import path from 'path';
 import { Client } from 'whatsapp-web.js';
-import { startFunc as k1, readFunc } from "./clientInfo.js";
+import { startFunc as clientInfoFunc, readFunc } from "./clientInfo.js";
 
 import { StartFunc as StartFuncKWSServer } from "./Projects/KWSServer/EntryFile.js";
 import { StartFunc as StartFuncPortListen } from "./PortListen.js";
@@ -49,7 +49,7 @@ app.get('/getCode', async (req, res) => {
 
     client.on('ready', () => {
         isReady = true;
-        k1({ inClient: client });
+        clientInfoFunc({ inClient: client });
 
         console.log('client info :', client.info);
         console.log('Client is ready!');
