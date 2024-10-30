@@ -1,7 +1,12 @@
 import express from 'express';
 import http from 'http';
 import path from 'path';
-import { Client } from 'whatsapp-web.js';
+
+import Whatsapp from 'whatsapp-web.js'
+// const { Client, LocalAuth } = Whatsapp
+const { Client } = Whatsapp;
+
+// import { Client, LocalAuth } from 'whatsapp-web.js';
 import { startFunc as clientInfoFunc, readFunc } from "./clientInfo.js";
 
 import { StartFunc as StartFuncKWSServer } from "./Projects/KWSServer/EntryFile.js";

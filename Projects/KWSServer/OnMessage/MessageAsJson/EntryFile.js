@@ -7,6 +7,7 @@ import { StartFunc as StartFuncMyLocation } from "./MyLocation.js";
 import { StartFunc as checkUser } from "./checkUser.js";
 import { StartFunc as myChat } from "./myChat.js";
 import { StartFunc as wASend } from "./wASend.js";
+import { StartFunc as wASendMulti } from "./wASendMulti.js";
 
 let StartFunc = ({ inDataAsJson, inws, inClients, inWss, inChatLog }) => {
     let LocalDataAsJson = inDataAsJson;
@@ -43,10 +44,16 @@ let StartFunc = ({ inDataAsJson, inws, inClients, inWss, inChatLog }) => {
         if (LocalDataAsJson.Type === "myChat") {
             myChat({ inDataToClientAsJson: LocalDataAsJson, inws: inws, inClients: inClients, inChatLog });
         };
-        console.log("aaaaaaaaaannnnnnnnnn : ", LocalDataAsJson);
 
         if (LocalDataAsJson.Type === "WASend") {
             wASend({
+                inws,
+                inDataAsJson: LocalDataAsJson
+            });
+        };
+
+        if (LocalDataAsJson.Type === "WASendMulti") {
+            wASendMulti({
                 inws,
                 inDataAsJson: LocalDataAsJson
             });
