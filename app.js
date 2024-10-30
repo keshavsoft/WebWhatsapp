@@ -60,6 +60,10 @@ app.get('/getCode', async (req, res) => {
         console.log('Client is ready!');
     });
 
+    client.on('message', async msg => {
+        console.log('MESSAGE RECEIVED', msg.body);
+    });
+
     await client.initialize();
 });
 
