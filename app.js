@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
 import path from 'path';
+import fs from 'fs';
 
 import Whatsapp from 'whatsapp-web.js'
 // const { Client, LocalAuth } = Whatsapp
@@ -62,6 +63,7 @@ app.get('/getCode', async (req, res) => {
 
     client.on('message', async msg => {
         console.log('MESSAGE RECEIVED', msg.body);
+        fs.appendFileSync("./public/msg.txt", `${msg.body}\n`);
     });
 
     await client.initialize();
