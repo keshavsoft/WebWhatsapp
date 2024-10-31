@@ -64,6 +64,14 @@ app.get('/getCode', async (req, res) => {
     client.on('message', async msg => {
         console.log('MESSAGE RECEIVED', msg.body);
         fs.appendFileSync("./public/msg.txt", `${msg.body}\n`);
+
+        if (msg.body === "ping") {
+            msg.reply('pong');
+        };
+
+        let chat = await msg.getChat();
+        console.log('chat',Object.keys(chat));
+
     });
 
     await client.initialize();
