@@ -13,6 +13,8 @@ import { startFunc as clientInfoFunc, readFunc } from "./clientInfo.js";
 import { StartFunc as StartFuncKWSServer } from "./Projects/KWSServer/EntryFile.js";
 import { StartFunc as StartFuncPortListen } from "./PortListen.js";
 
+import { startFunc as log } from "./log.js";
+
 const app = express();
 const server = http.createServer(app);
 
@@ -62,15 +64,24 @@ app.get('/getCode', async (req, res) => {
     });
 
     client.on('message', async msg => {
-        console.log('MESSAGE RECEIVED', msg.body);
-        fs.appendFileSync("./public/msg.txt", `${msg.body}\n`);
+        // console.log('MESSAGE RECEIVED', msg.body);
+        // fs.appendFileSync("./public/msg.txt", `${msg.body}\n`);
 
         if (msg.body === "ping") {
             msg.reply('pong');
         };
 
         let chat = await msg.getChat();
-        console.log('chat',Object.keys(chat));
+
+        log({ inChatData: chat });
+
+        // let oldData = fs.readFileSync("data.json");
+        // let oldJsonData = JSON.parse(oldData);
+        // oldJsonData.push(chat);
+
+        // fs.writeFileSync("data.json", JSON.stringify(oldJsonData));
+
+        // console.log('chat', Object.keys(chat), chat.name, chat.id, Object.keys(chat.lastMessage), chat.lastMessage.from, chat.lastMessage.to, chat.lastMessage.body);
 
     });
 
@@ -79,7 +90,7 @@ app.get('/getCode', async (req, res) => {
 
 app.get('/sendMulti', async (req, res) => {
     // const { number, message } = req.body;
-    const number = "+918143779221";
+    const number = "+919848163021";
     const message = "Test from KeshavSoft";
 
     if (!isReady) {
