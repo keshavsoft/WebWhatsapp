@@ -23,6 +23,8 @@ var port = normalizePort(process.env.PORT || '7001');
 let client;
 let isReady = false;
 
+const CommonDataPath = "./public/chatData.json";
+
 app.use(express.json({ limit: '100mb' }));
 
 app.use('/', express.static(path.join(path.resolve(), 'public')));
@@ -65,7 +67,7 @@ app.get('/getCode', async (req, res) => {
         client.getChats().then(chatData => {
             console.log('chatData!', chatData.length);
 
-            fs.writeFileSync("chatData.json", JSON.stringify(chatData));
+            fs.writeFileSync(CommonDataPath, JSON.stringify(chatData));
         });
 
         // console.log('chat', Object.keys(chat), chat.name, chat.id, Object.keys(chat.lastMessage), chat.lastMessage.from, chat.lastMessage.to, chat.lastMessage.body);
