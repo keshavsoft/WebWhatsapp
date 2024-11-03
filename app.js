@@ -59,8 +59,17 @@ app.get('/getCode', async (req, res) => {
         isReady = true;
         clientInfoFunc({ inClient: client });
 
-        console.log('client info :', client.info);
-        console.log('Client is ready!');
+        console.log('client info :', Object.keys(client));
+        // console.log('Client is ready!', client.getChats());
+
+        client.getChats().then(chatData => {
+            console.log('chatData!', chatData.length);
+
+            fs.writeFileSync("chatData.json", JSON.stringify(chatData));
+        });
+
+        // console.log('chat', Object.keys(chat), chat.name, chat.id, Object.keys(chat.lastMessage), chat.lastMessage.from, chat.lastMessage.to, chat.lastMessage.body);
+
     });
 
     client.on('message', async msg => {
