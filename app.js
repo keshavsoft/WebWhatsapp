@@ -47,7 +47,12 @@ app.get('/getCode', async (req, res) => {
     //     return;
     // }
 
-    client = new Client();
+    // client = new Client();
+    const client = new Client({
+        puppeteer: {
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        }
+    });
 
     client.on('qr', (qr) => {
         // const k1 = client["_events"];
