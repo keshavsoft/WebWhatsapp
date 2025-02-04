@@ -14,7 +14,6 @@ import { StartFunc as StartFuncKWSServer } from "./Projects/KWSServer/EntryFile.
 import { StartFunc as StartFuncPortListen } from "./PortListen.js";
 
 import { startFunc as log } from "./log.js";
-import { StartFunc as StartFuncOnMessage } from "./WA/onMessage.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -80,9 +79,7 @@ app.get('/getCode', async (req, res) => {
 
     });
 
-    client.on('message', StartFuncOnMessage);
-
-    client.on('message1', async msg => {
+    client.on('message', async msg => {
         if (msg.body === "ping") {
             msg.reply('pong');
         };
