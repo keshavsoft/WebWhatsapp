@@ -1,82 +1,103 @@
-import express from "express";
+import express from 'express';
+import http from 'http';
+import path from 'path';
+import fs from 'fs';
+
+import Whatsapp from 'whatsapp-web.js'
+// const { Client, LocalAuth } = Whatsapp
+const { Client, LocalAuth } = Whatsapp;
+
+// import { Client, LocalAuth } from 'whatsapp-web.js';
+import { startFunc as clientInfoFunc, readFunc } from "./clientInfo.js";
+
+import { StartFunc as StartFuncKWSServer } from "./Projects/KWSServer/EntryFile.js";
+import { StartFunc as StartFuncPortListen } from "./PortListen.js";
+
+import { startFunc as log } from "./log.js";
+import { StartFunc as StartFuncFromInwardMessage } from "./WA/inwardMessage.js";
+
 const app = express();
+const server = http.createServer(app);
 
-import { Client } from 'whatsapp-web.js';
+var port = normalizePort(process.env.PORT || '7001');
 
-var port = normalizePort(process.env.PORT || '3000');
+let client;
+let isReady = false;
 
-const client = new Client();
+const CommonDataPath = "./public/chatData.json";
 
-client.on('loading_screen', (percent, message) => {
-    console.log('LOADING SCREEN', percent, message);
+app.use(express.json({ limit: '100mb' }));
+
+app.use('/', express.static(path.join(path.resolve(), 'public')));
+
+app.get("/k1", async (req, res) => {
+    console.log('QR Code received:', client.info, readFunc());
+
+    res.end("this is k1");
 });
 
-client.on('authenticated', () => {
-    console.log('AUTHENTICATED');
-});
-client.on('auth_failure', msg => {
-    // Fired if session restore was unsuccessful
-    console.error('AUTHENTICATION FAILURE', msg);
+app.get("/k2", async (req, res) => {
+    console.log('k2:');
+    readFunc();
+    res.end("this is k2");
 });
 
-client.on('message_create', async (msg) => {
-    // Fired on all message creations, including your own
-    if (msg.fromMe) {
-        console.log("aaaaaaaaaaaaa : ", msg.body);
-        // do stuff here
-    }
-
-    // Unpins a message
-    if (msg.fromMe && msg.body.startsWith('!unpin')) {
-        const pinnedMsg = await msg.getQuotedMessage();
-        if (pinnedMsg) {
-            // Will unpin a message
-            const result = await pinnedMsg.unpin();
-            console.log(result); // True if the operation completed successfully, false otherwise
-        }
-    }
-});
-
-client.on('ready', () => {
-    console.log('Client is ready!');
-});
-
-client.on('message', msg => {
-    console.log("aa : ", msg.from, msg.body);
-
-    if (msg.body === '!ping') {
-        msg.reply('pong');
-    };
-
-    if (msg.body === 'hai') {
-        msg.reply('hello');
-    };
-});
-
-client.on('call', async (call) => {
-    console.log('Call received, rejecting. GOTO Line 261 to disable', call);
-    if (rejectCalls) await call.reject();
-    await client.sendMessage(call.from, `[${call.fromMe ? 'Outgoing' : 'Incoming'}] Phone call from ${call.from}, type ${call.isGroup ? 'group' : ''} ${call.isVideo ? 'video' : 'audio'} call. ${rejectCalls ? 'This call was automatically rejected by the script.' : ''}`);
-});
-
-app.use(express.static('public'))
-
-app.get('/', function (req, res) {
-    res.send('KeshavSoft');
-});
-
-app.get('/AboutUs', function (req, res) {
-    res.send('KeshavSoft Web Whatsapp implementation');
-});
-
-app.get('/getCode', function (req, res) {
-    // res.send('KeshavSoft Web Whatsapp implementation');
-    client.on('qr', (qr) => {
-        res.send(qr);
+app.get('/getCode', async (req, res) => {
+    client = new Client({
+        puppeteer: {
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        },
+        authStrategy: new LocalAuth()
     });
 
-    client.initialize();
+    client.on('qr', (qr) => {
+        res.end(qr);
+    });
+
+    client.on('ready', () => {
+        isReady = true;
+        clientInfoFunc({ inClient: client });
+
+        console.log('client info :', Object.keys(client));
+
+        client.getChats().then(chatData => {
+            console.log('chatData!', chatData.length);
+        });
+    });
+
+    client.on('message', StartFuncFromInwardMessage);
+    client.on('authenticated', (session) => {
+        console.log("authenticated : ");
+    });
+
+    await client.initialize();
 });
+
+app.get('/sendMulti', async (req, res) => {
+    // const { number, message } = req.body;
+    const number = "+919848163021";
+    const message = "Test from KeshavSoft";
+
+    if (!isReady) {
+        res.status(400).json({ error: 'Client not ready' });
+        return;
+    };
+
+    try {
+        // const chatId = number.substring(1) + "@c.us";
+        console.log("ggggggggggg : ", number, number.substring(1));
+
+        // await client.sendMessage(chatId, message);
+
+        await client.sendMessage("+919848163021".substring(1) + "@c.us", "this is 2nd");
+
+        res.json({ status: 'Message sent successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to send message' });
+    }
+});
+
+StartFuncKWSServer(server, client);
 
 function normalizePort(val) {
     var port = parseInt(val, 10);
@@ -92,6 +113,4 @@ function normalizePort(val) {
     return false;
 };
 
-app.listen(port, () => {
-    console.log("listening to port 3000");
-});
+server.listen(port, StartFuncPortListen);

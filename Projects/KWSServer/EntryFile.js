@@ -15,7 +15,6 @@ let StartFunc = (server) => {
 
 let WsOnConnection = (ws, req) => {
     let LocalIpAddress = req.headers["x-forwarded-for"];
-  
 
     if ("cookie" in req.headers) {
         let LocalCookieValue = req.headers["cookie"].split(";");
@@ -31,7 +30,7 @@ let WsOnConnection = (ws, req) => {
     let localWebSocketData = clients.get(ws);
 
     const LocalFuncSendMessage = ({ inMessage, inTypeJson = false }) => {
-        console.log("llllllllllllllll : ", inMessage, inTypeJson);
+        // console.log("llllllllllllllll : ", inMessage, inTypeJson);
 
         CommonChatLog.push({ id: localWebSocketData.id, data: inMessage, InOut: "Out" });
 
@@ -58,7 +57,7 @@ let WsOnConnection = (ws, req) => {
         CommonChatLog.push({ id: localWebSocketData.id, data, InOut: "In" });
 
         console.log("inWardMessage : ", data.toString(), clients.size);
-        
+
         CommonOnMessage({
             inData: data,
             inws: ws,
@@ -80,8 +79,6 @@ let WsOnConnection = (ws, req) => {
     });
 
     ws.send(Date.now());
-
 };
-
 
 export { StartFunc };
