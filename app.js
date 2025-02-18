@@ -43,7 +43,7 @@ app.get("/k2", async (req, res) => {
 });
 
 app.get('/getCode', async (req, res) => {
-    await StartFuncFromEntryFile({ inClient: client });
+    await StartFuncFromEntryFile({ inClient: client, inReponse: res });
 });
 
 app.get('/sendMulti', async (req, res) => {

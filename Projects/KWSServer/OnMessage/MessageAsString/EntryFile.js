@@ -4,6 +4,7 @@ import { StartFunc as StartFuncreturnOnlineClientsWOMe } from "./returnOnlineCli
 import { StartFunc as myChat } from "./myChat.js";
 import { StartFunc as myPhone } from "./myPhone.js";
 import { StartFunc as wAProfile } from "./wAProfile.js";
+import { StartFunc as StartFuncFromGetQrCode } from "./getQrCode.js";
 
 let StartFunc = ({ inDataAsString, inws, inClients, inChatLog, inSendFunc }) => {
     let LocalDataAsSting = inDataAsString;
@@ -30,6 +31,10 @@ let StartFunc = ({ inDataAsString, inws, inClients, inChatLog, inSendFunc }) => 
 
     if (LocalDataAsSting === "WAProfile") {
         wAProfile({ inSendFunc, inws });
+    };
+
+    if (LocalDataAsSting === "GetQrCode") {
+        StartFuncFromGetQrCode({ inSendFunc, inws });
     };
 
     LocalFuncAiChat({ inDataAsString, inws, inClients, inChatLog, inSendFunc });

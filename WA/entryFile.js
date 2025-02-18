@@ -4,8 +4,11 @@ const { Client, LocalAuth } = Whatsapp;
 import { StartFunc as StartFuncFromInwardMessage } from "./inwardMessage.js";
 import { StartFunc as StartFuncFromAuthenticated } from "./authenticated.js";
 
-const StartFunc = async ({ inClient }) => {
+import { StartFunc as StartFuncFromQrCodeGenerated } from "../qrCodeGenerated.js";
+
+const StartFunc = async ({ inClient, inReponse }) => {
     let client = inClient;
+    let res = inReponse;
 
     client = new Client({
         puppeteer: {
@@ -15,7 +18,10 @@ const StartFunc = async ({ inClient }) => {
     });
 
     client.on('qr', (qr) => {
-        res.end(qr);
+        console.log("qr is generated : ", qr);
+
+        StartFuncFromQrCodeGenerated({ inQrCodeGenerated: qr })
+        // res.end(qr);
     });
 
     client.on('ready', () => {

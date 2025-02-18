@@ -1,5 +1,3 @@
-import { StartFunc as sendMessage } from "./sendMessage.js";
-
 let StartFunc = (event) => {
     try {
         let jVarLocalParse = JSON.parse(event.data);
@@ -8,24 +6,15 @@ let StartFunc = (event) => {
             case "wAProfile":
                 wAProfile({ inData: jVarLocalParse.res });
                 break;
-
+            case "QrCodeGenerated":
+                jFLocalHandleQrCode({ inQrReceived: jVarLocalParse.res });
+                break;
             default:
                 break;
         };
     } catch (error) {
         // jFLocalShowMessage({ inMessage: event.data });
     };
-};
-
-const jFLocalShowMessage = ({ inMessage }) => {
-    const template = document.querySelector("#RecieveMessageId");
-    let jVarLocalChatContentId = document.getElementById('ChatContentId');
-
-    // Clone the new row and insert it into the table
-    const clone = template.content.cloneNode(true);
-    clone.querySelector(".chat-message").innerHTML = inMessage;
-
-    jVarLocalChatContentId.appendChild(clone);
 };
 
 let jFLocalToInputUserNameId = (inValue) => {
@@ -51,14 +40,41 @@ const wAProfile = ({ inData }) => {
     jFLocalToInputMobileNumberId(inData.me.user);
 };
 
-const jFLocalButtonClickForYes = () => {
-    // console.log("yes");
-    sendMessage({ inDataToSend: "Yes", inDataType: false });
+const jFLocalHandleQrCode = ({ inQrReceived }) => {
+    console.log("inQrReceived : ", inQrReceived);
+    jFCreateQrCode({ inQrCode: inQrReceived });
 };
 
-const jFLocalButtonClickForNo = () => {
-    // console.log("noaaaaaaaaa00000000000000000");
-    sendMessage({ inDataToSend: "No", inDataType: false });
+let jFCreateQrCode = ({ inQrCode }) => {
+    var canvas = document.getElementById("CanvasId");
+    canvas.height = 1;
+    canvas.width = 1;
+    canvas.style.visibility = 'hidden';
+
+    // Convert the options to an object.
+    let opts = {};
+
+    // Finish up the options
+    opts.text = inQrCode;
+    opts.bcid = "qrcode";
+    opts.scaleX = 1;
+    opts.scaleY = 1;
+    opts.rotate = "N";
+
+    // Draw the bar code to the canvas
+    try {
+        let ts0 = new Date;
+        bwipjs.toCanvas(canvas, opts);
+        show(ts0, new Date);
+    } catch (e) {
+        console.log("error : ", e);
+
+        return;
+    }
+
+    function show(ts0, ts1) {
+        canvas.style.visibility = 'visible';
+    }
 };
 
 export { StartFunc };

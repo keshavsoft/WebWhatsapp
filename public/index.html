@@ -90,10 +90,14 @@
             jFCreateQrCode({ inQrCode: jVarLocalFromResponse });
         };
 
-        jFGetCode().then(() => {
-            let jVarLocalSendMessageLinkId = document.getElementById('SendMessageLinkId');
-            jVarLocalSendMessageLinkId.style.display = "";
-        });
+        // jFGetCode().then(() => {
+        //     let jVarLocalSendMessageLinkId = document.getElementById('SendMessageLinkId');
+        //     jVarLocalSendMessageLinkId.style.display = "";
+        // });
+
+        const jFLocalGetQrFromWebSocket = () => {
+            webSocket.send("GetQrCode");
+        };
     </script>
 
     <script type="module" src="./index/Js/WebSocket/EntryFile.js"></script>
