@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+const CommonPort = process.env.PORT;
+
 let StartFunc = () => {
-    console.log(`Listening in some local port : 7001`);
-    console.log(`http server at http://localhost:7001`);
+    console.log(`Listening in some local port : ${CommonPort}`);
+    console.log(`http server at http://localhost:${CommonPort}`);
 
     LocalFuncCheckEnv();
 
