@@ -11,9 +11,14 @@ const jFInsertCard = ({ inCardData }) => {
         const tbody = document.querySelector("#ToShowContainer");
         const template = document.querySelector("#TemplateForCard");
 
-        const clone2 = template.content.cloneNode(true);
+        const clone = template.content.cloneNode(true);
+        let td = clone.querySelectorAll("h6");
+        td[0].textContent = inCardData.Name;
 
-        tbody.appendChild(clone2);
+        let jVarLocalTimeSpan = clone.querySelector(".TimeSpanClass");
+        jVarLocalTimeSpan.textContent = inCardData.loginDateTime;
+      
+        tbody.appendChild(clone);
     } else {
         // Find another way to add the rows to the table because
         // the HTML template element is not supported.
