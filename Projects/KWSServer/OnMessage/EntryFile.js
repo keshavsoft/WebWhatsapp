@@ -14,16 +14,6 @@ let StartFunc = ({ inData, inws, inClients, inWss, inChatLog, inSendFunc }) => {
     };
 
     CommonMessageAsString({ inDataAsString: LocalData.toString(), inws, inClients, inChatLog, inSendFunc });
-
-    // const LocalFuncLogMessage = ({ inId, inMessage, inTypeJson }) => {
-    //     CommonChatLog.push({ id: inId, data: inMessage, InOut: "Out" });
-
-    //     if (inTypeJson) {
-    //         ws.send(JSON.stringify(inMessage));
-    //     } else {
-    //         ws.send(inMessage);
-    //     };
-    // };
 };
 
 export { StartFunc };

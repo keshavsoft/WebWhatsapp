@@ -5,6 +5,7 @@ import { StartFunc as StartFuncFromInwardMessage } from "./inwardMessage.js";
 import { StartFunc as StartFuncFromAuthenticated } from "./authenticated.js";
 
 import { StartFunc as StartFuncFromQrCodeGenerated } from "../qrCodeGenerated.js";
+import { startFunc as clientInfoFunc, readFunc } from "../clientInfo.js";
 
 const StartFunc = async ({ inClient, inReponse }) => {
     let client = inClient;
@@ -25,14 +26,14 @@ const StartFunc = async ({ inClient, inReponse }) => {
     });
 
     client.on('ready', () => {
-        isReady = true;
-        clientInfoFunc({ inClient: client });
+       // isReady = true;
+        //
 
         console.log('client info :', Object.keys(client));
-
-        client.getChats().then(chatData => {
-            console.log('chatData!', chatData.length);
-        });
+        clientInfoFunc({ inClient: client });
+        // client.getChats().then(chatData => {
+        //     console.log('chatData!', chatData.length);
+        // });
     });
 
     client.on('message', StartFuncFromInwardMessage);

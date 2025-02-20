@@ -1,19 +1,12 @@
 import express from 'express';
 import http from 'http';
 import path from 'path';
-import fs from 'fs';
 
-import Whatsapp from 'whatsapp-web.js'
-// const { Client, LocalAuth } = Whatsapp
-const { Client, LocalAuth } = Whatsapp;
-
-// import { Client, LocalAuth } from 'whatsapp-web.js';
 import { startFunc as clientInfoFunc, readFunc } from "./clientInfo.js";
 
 import { StartFunc as StartFuncKWSServer } from "./Projects/KWSServer/EntryFile.js";
 import { StartFunc as StartFuncPortListen } from "./PortListen.js";
 
-import { startFunc as log } from "./log.js";
 import { StartFunc as StartFuncFromEntryFile } from "./WA/entryFile.js";
 
 const app = express();
@@ -24,21 +17,14 @@ var port = normalizePort(process.env.PORT || '7001');
 let client;
 let isReady = false;
 
-const CommonDataPath = "./public/chatData.json";
-
 app.use(express.json({ limit: '100mb' }));
 
 app.use('/', express.static(path.join(path.resolve(), 'public')));
 
-app.get("/k1", async (req, res) => {
-    console.log('QR Code received:', client.info, readFunc());
-
-    res.end("this is k1");
-});
-
 app.get("/k2", async (req, res) => {
-    console.log('k2:');
-    readFunc();
+    const k2 = readFunc();
+
+    console.log('k2:', k2);
     res.end("this is k2");
 });
 

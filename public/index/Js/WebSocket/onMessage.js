@@ -42,7 +42,10 @@ const wAProfile = ({ inData }) => {
 
 const jFLocalHandleQrCode = ({ inQrReceived }) => {
     console.log("inQrReceived : ", inQrReceived);
-    jFCreateQrCode({ inQrCode: inQrReceived });
+
+    if (inQrReceived === undefined === false) {
+        jFCreateQrCode({ inQrCode: inQrReceived });
+    };
 };
 
 let jFCreateQrCode = ({ inQrCode }) => {
@@ -57,24 +60,19 @@ let jFCreateQrCode = ({ inQrCode }) => {
     // Finish up the options
     opts.text = inQrCode;
     opts.bcid = "qrcode";
-    opts.scaleX = 1;
-    opts.scaleY = 1;
+    opts.scaleX = 2;
+    opts.scaleY = 2;
     opts.rotate = "N";
 
     // Draw the bar code to the canvas
     try {
-        let ts0 = new Date;
         bwipjs.toCanvas(canvas, opts);
-        show(ts0, new Date);
+        canvas.style.visibility = 'visible';
     } catch (e) {
         console.log("error : ", e);
 
         return;
-    }
-
-    function show(ts0, ts1) {
-        canvas.style.visibility = 'visible';
-    }
+    };
 };
 
 export { StartFunc };

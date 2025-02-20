@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <h1>WhatsappWeb</h1>
+        <!-- place navbar here -->
+    </header>
+    <main>
+        <div class="row">
+            <div class="col" style="display: flex; align-items: center; justify-content: center;">
+
+                <canvas id="CanvasId" width=2 height=2 style=" border:1px solid #fff;visibility:hidden"></canvas>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <a type="button" href="./WA/sendMessage.html" id="SendMessageLinkId" style="display: none;">Send
+                    Message</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script src="./index/Js/bwip-js-min.js"></script>
+
+    <script>
+        let webSocket;
+
+        let jFCreateQrCode = ({ inQrCode }) => {
+            var canvas = document.getElementById("CanvasId");
+            canvas.height = 1;
+            canvas.width = 1;
+            canvas.style.visibility = 'hidden';
+
+            // Convert the options to an object.
+            let opts = {};
+
+            // Finish up the options
+            opts.text = inQrCode;
+            opts.bcid = "qrcode";
+            opts.scaleX = 1;
+            opts.scaleY = 1;
+            opts.rotate = "N";
+
+            // Draw the bar code to the canvas
+            try {
+                let ts0 = new Date;
+                bwipjs.toCanvas(canvas, opts);
+                show(ts0, new Date);
+            } catch (e) {
+                console.log("error : ", e);
+
+                return;
+            }
+
+            function show(ts0, ts1) {
+                canvas.style.visibility = 'visible';
+            }
+        };
+
+        let jFGetCode = async () => {
+            let resource = "/getCode";
+            const response = await fetch(resource);
+            let jVarLocalFromResponse = await response.text();
+            console.log("jVarLocalFromResponse : ", jVarLocalFromResponse);
+
+            // jFCreateQrCode({ inQrCode: jVarLocalFromResponse });
+        };
+
+        jFGetCode().then();
+
+        // jFGetCode().then(() => {
+        //     let jVarLocalSendMessageLinkId = document.getElementById('SendMessageLinkId');
+        //     jVarLocalSendMessageLinkId.style.display = "";
+        // });
+
+        const jFLocalGetQrFromWebSocket = () => {
+            webSocket.send("GetQrCode");
+        };
+    </script>
+
+    <script type="module" src="./index/Js/WebSocket/EntryFile.js"></script>
+</body>
+
+</html>

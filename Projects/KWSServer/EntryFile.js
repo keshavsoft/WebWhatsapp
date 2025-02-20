@@ -45,18 +45,9 @@ let WsOnConnection = (ws, req) => {
         inMessage: { Type: 'IsStudent', webSocketId: localWebSocketData.id },
         inTypeJson: true
     });
-    // ws.send(JSON.stringify({ Type: 'GetWebSocketId', webSocketId: localWebSocketData.id }));
-    // CommonSaveToJsonOnConnections({
-    //     inVerifyToken: LocalFromVerifyToken,
-    //     inws: ws,
-    //     inClients: clients,
-    //     inRequest: req
-    // });
 
     ws.on('message', (data, isBinary) => {
         CommonChatLog.push({ id: localWebSocketData.id, data, InOut: "In" });
-
-        console.log("inWardMessage : ", data.toString(), clients.size);
 
         CommonOnMessage({
             inData: data,
