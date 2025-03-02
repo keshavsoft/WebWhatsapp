@@ -21,23 +21,12 @@
 </head>
 
 <body>
-    <div id="ShowQrCodeDivId" style="width: 244px; height: 244px;"><canvas id="CanvasId" width=4 height=4
-            style=" border:1px solid #fff;visibility:hidden"></canvas>
-        <div style="text-align: center;">Scan the above qrcode from your mobile Whatsapp</div>
-    </div>
+    <input type="text" id="sendMessageInputId">
+    <button id="sendMessageButtonId">Send Message</button>
 </body>
-
-<script src="./index/Js/bwip-js-min.js"></script>
 
 <script>
     let webSocket;
-
-    let jFGetCode = async () => {
-        let resource = "/getCode";
-        await fetch(resource);
-    };
-
-    jFGetCode().then();
 
     const jFLocalSendMessage = (inToNumber) => {
         let jVarLocalObjectToServer = {};
@@ -48,8 +37,12 @@
         webSocket.send(JSON.stringify(jVarLocalObjectToServer));
     };
 
+    document.getElementById("sendMessageButtonId").addEventListener("click", () => {
+        let jVarLocalToNumber = document.getElementById("sendMessageInputId").value;
+        jFLocalSendMessage(jVarLocalToNumber);
+    });
 </script>
 
-<script type="module" src="./index/Js/WebSocket/EntryFile.js"></script>
+<script type="module" src="./sendMessage/Js/WebSocket/EntryFile.js"></script>
 
 </html>

@@ -26,7 +26,7 @@ const StartFunc = async ({ inClient, inReponse }) => {
     });
 
     client.on('ready', () => {
-       // isReady = true;
+        // isReady = true;
         //
 
         console.log('client info :', Object.keys(client));
@@ -38,6 +38,9 @@ const StartFunc = async ({ inClient, inReponse }) => {
 
     client.on('message', StartFuncFromInwardMessage);
     client.on('authenticated', StartFuncFromAuthenticated);
+    client.on('remote_session_saved', () => {
+        console.log('remote_session_saved!');
+    });
 
     await client.initialize();
 };

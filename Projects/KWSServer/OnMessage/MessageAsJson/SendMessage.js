@@ -8,7 +8,8 @@ let StartFunc = ({ inDataToClientAsJson, inws, inClients }) => {
         Message: inDataToClientAsJson.Message,
         toId: toId, fromId: LocalSendObject.id
     }));
-}
+};
+
 let Getws = (inClients, toId) => {
     for (let [key, value] of inClients.entries()) {
         if (value.id === toId)
