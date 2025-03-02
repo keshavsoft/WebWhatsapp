@@ -29,6 +29,16 @@ app.get('/getQrCode', (req, res) => {
     // await StartFuncFromEntryFile({ inClient: client, inReponse: res });
 });
 
+app.get('/KStudents', async (req, res) => {
+    // const response = await fetch('https://join.keshavsoft.biz/binV4/StudentNames/ShowWithColumns');
+    const response = await fetch('https://join.keshavsoft.biz/binV4/StudentNames/Search?Mobile=9885886051');
+    
+    const data = await response.json();
+    console.log(data);
+    res.json(data);
+});
+
+
 StartFuncKWSServer(server, client);
 
 function normalizePort(val) {

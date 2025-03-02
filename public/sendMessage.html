@@ -41,6 +41,14 @@
         let jVarLocalToNumber = document.getElementById("sendMessageInputId").value;
         jFLocalSendMessage(jVarLocalToNumber);
     });
+
+    
+    let jFTest = async () => {
+        let resource = "https://join.keshavsoft.biz/binV4/StudentNames/ShowWithColumns";
+        await fetch(resource);
+    };
+
+
 </script>
 
 <script type="module" src="./sendMessage/Js/WebSocket/EntryFile.js"></script>
