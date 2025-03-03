@@ -7,14 +7,14 @@ const StartFunc = async msg => {
 
     if (LocalFromFetch.length > 0) {
         msg.reply('You are already registered with us');
-    };
+    } else {
+        if (msg.body === "ping") {
+            msg.reply('pong');
+        };
 
-    if (msg.body === "ping") {
-        msg.reply('pong');
-    };
-
-    if (msg.body === "hi") {
-        msg.reply('Greetings from KeshavSoft');
+        if (msg.body === "hi") {
+            msg.reply('Greetings from KeshavSoft');
+        };
     };
 };
 
