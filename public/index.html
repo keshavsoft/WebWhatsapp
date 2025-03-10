@@ -21,9 +21,10 @@
 </head>
 
 <body>
-    <div id="ShowQrCodeDivId" style="width: 244px; height: 244px;"><canvas id="CanvasId" width=4 height=4
-            style=" border:1px solid #fff;visibility:hidden"></canvas>
-        <div style="text-align: center;">Scan the above qrcode from your mobile Whatsapp</div>
+    <div id="ShowQrCodeDivId" style="width: 244px; height: 244px;">
+        <canvas id="CanvasId" width=4 height=4 style=" border:1px solid #fff;visibility:hidden"></canvas>
+        <div style="text-align: center;">Scan the above qrcode from your mobile Whatsapp <strong
+                id="ShowDateId">Time</strong> </div>
     </div>
 </body>
 
@@ -53,6 +54,22 @@
         webSocket.send(JSON.stringify(jVarLocalObjectToServer));
     };
 
+    const jFLocalFuncToRun = () => {
+        let jVarLocalCanvasId = document.getElementById('CanvasId');
+        const jVarLocalCanvasDate = jVarLocalCanvasId.dataset.CreatedDate;
+        jFLocalToInputShowDateId(((Date.now() - jVarLocalCanvasDate) / 1000).toFixed(0) + " Seconds");
+    };
+
+    let jFLocalToInputShowDateId = (inValue) => {
+        let jVarLocalHtmlId = 'ShowDateId';
+        let jVarLocalShowDateId = document.getElementById(jVarLocalHtmlId);
+
+        if (jVarLocalShowDateId === null === false) {
+            jVarLocalShowDateId.innerHTML = inValue;
+        };
+    };
+
+    setInterval(jFLocalFuncToRun, 1000);
 </script>
 
 <script type="module" src="./index/Js/WebSocket/EntryFile.js"></script>

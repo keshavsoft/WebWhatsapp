@@ -7,7 +7,7 @@ let StartFunc = (event) => {
         // event.currentTarget.send("-----");
 
         let jVarLocalParse = JSON.parse(event.data);
-        console.log("jVarLocalParse : ", jVarLocalParse);
+        // console.log("jVarLocalParse : ", jVarLocalParse);
         switch (jVarLocalParse?.Type) {
             case "wAProfile":
                 wAProfile({ inData: jVarLocalParse.res, inWs: jVarLocalCurrentTarget });
@@ -50,12 +50,28 @@ const jFLocalHandleQrCode = ({ inQrReceived }) => {
     };
 };
 
+let jFLocalToInputShowDateId = (inValue) => {
+    let jVarLocalHtmlId = 'ShowDateId';
+    let jVarLocalShowDateId = document.getElementById(jVarLocalHtmlId);
+
+    if (jVarLocalShowDateId === null === false) {
+        jVarLocalShowDateId.innerHTML = inValue;
+    };
+};
+
 let jFCreateQrCode = ({ inQrCode }) => {
-    var canvas = document.getElementById("CanvasId");
+    let canvas = document.getElementById("CanvasId");
+    const jVarLocalPresentQrCode = canvas.dataset.QrCode;
+
+    if (inQrCode === jVarLocalPresentQrCode) {
+        return;
+    };
+
     canvas.height = 1;
     canvas.width = 1;
     canvas.style.visibility = 'hidden';
-
+    canvas.dataset.QrCode = inQrCode;
+    canvas.dataset.CreatedDate = Date.now();
     // Convert the options to an object.
     let opts = {};
 
