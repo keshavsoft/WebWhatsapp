@@ -31,13 +31,18 @@
 
 <script>
     let webSocket;
+    let KSQrRec;
+    let KSWAProfile;
+    let KSIntervalId;
 
     let jFGetCode = async () => {
         let resource = "/getCode";
         await fetch(resource);
     };
 
-    jFGetCode().then();
+    jFGetCode().then(() => {
+        console.log("sssssssssssss");
+    });
 
     const jFLocalSendMessage = (inToNumber) => {
         let jVarLocalObjectToServer = {};
@@ -51,5 +56,6 @@
 </script>
 
 <script type="module" src="./index/Js/WebSocket/EntryFile.js"></script>
+<script type="module" src="./index/Js/entryFile.js"></script>
 
 </html>

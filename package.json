@@ -1,6 +1,6 @@
 {
   "name": "webwhatsapp",
-  "version": "2024.10.28",
+  "version": "2025.03.10",
   "description": "WebWhatsapp using npm module",
   "main": "app.js",
   "type": "module",

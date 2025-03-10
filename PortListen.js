@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-const CommonPort = process.env.PORT;
+const CommonPort = process.env.PORT || 7001;
 
 let StartFunc = () => {
     console.log(`Listening in some local port : ${CommonPort}`);

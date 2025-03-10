@@ -1,10 +1,16 @@
 let StartFunc = (event) => {
+    let jVarLocalCurrentTarget = event.currentTarget;
+
     try {
+        // console.log("jVarLocalParse : ", event.currentTarget);
+        // event.currentTarget.send("pppppppppppp");
+        // event.currentTarget.send("-----");
+
         let jVarLocalParse = JSON.parse(event.data);
         console.log("jVarLocalParse : ", jVarLocalParse);
         switch (jVarLocalParse?.Type) {
             case "wAProfile":
-                wAProfile({ inData: jVarLocalParse.res });
+                wAProfile({ inData: jVarLocalParse.res, inWs: jVarLocalCurrentTarget });
                 break;
             case "QrCodeGenerated":
                 jFLocalHandleQrCode({ inQrReceived: jVarLocalParse.res });
@@ -17,33 +23,29 @@ let StartFunc = (event) => {
     };
 };
 
-let jFLocalToInputUserNameId = (inValue) => {
-    let jVarLocalHtmlId = 'UserNameId';
-    let jVarLocalUserNameId = document.getElementById(jVarLocalHtmlId);
+const wAProfile = ({ inData, inWs }) => {
 
-    if (jVarLocalUserNameId === null === false) {
-        jVarLocalUserNameId.innerHTML = inValue;
+    console.log("bbbbbbbbb : ", inData, inWs);
+
+    if (inData === undefined) {
+        inWs.send("GetQrCode");
+    } else {
+        clearInterval(KSIntervalId);
+
+        KSIntervalId = null;
+
+        location.href = "sendMessage.html";
     };
-};
 
-let jFLocalToInputMobileNumberId = (inValue) => {
-    let jVarLocalHtmlId = 'MobileNumberId';
-    let jVarLocalMobileNumberId = document.getElementById(jVarLocalHtmlId);
-
-    if (jVarLocalMobileNumberId === null === false) {
-        jVarLocalMobileNumberId.innerHTML = inValue;
-    };
-};
-
-const wAProfile = ({ inData }) => {
-    jFLocalToInputUserNameId(inData.pushname);
-    jFLocalToInputMobileNumberId(inData.me.user);
+    // jFLocalToInputUserNameId(inData.pushname);
+    // jFLocalToInputMobileNumberId(inData.me.user);
 };
 
 const jFLocalHandleQrCode = ({ inQrReceived }) => {
-    console.log("inQrReceived : ", inQrReceived);
+    // console.log("inQrReceived : ", inQrReceived);
 
     if (inQrReceived === undefined === false) {
+        KSQrRec = inQrReceived;
         jFCreateQrCode({ inQrCode: inQrReceived });
     };
 };
