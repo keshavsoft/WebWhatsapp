@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Send Custom Message</title>
 
     <style>
         #ShowQrCodeDivId {
@@ -21,38 +21,30 @@
 </head>
 
 <body>
-    <input type="text" id="sendMessageInputId">
+    <input type="text" id="sendMessageInputId" placeholder="Enter number">
+    <input type="text" id="sendCutomMessageInputId" placeholder="Enter message">
     <button id="sendMessageButtonId">Send Message</button>
 </body>
 
-<script>
-    let webSocket;
 
-    const jFLocalSendMessage = (inToNumber) => {
-        let jVarLocalObjectToServer = {};
-        jVarLocalObjectToServer.Type = 'WASend';
-        jVarLocalObjectToServer.ToMessage = "Sample for testing";
-        jVarLocalObjectToServer.ToNumber = inToNumber;
+<script type="module">
+    import { webSocket } from './Js/sendCutomMessage/WebSocket/EntryFile.js';
+
+    const jFLocalSendMessage = (inToNumber, inMessage) => {
+        let jVarLocalObjectToServer = {
+            Type: 'WASend',
+            ToMessage: inMessage,
+            ToNumber: inToNumber
+        };
 
         webSocket.send(JSON.stringify(jVarLocalObjectToServer));
     };
 
-    const jFLocalGetWAProfile = (inToNumber) => {
-        webSocket.send("WAProfile");
-    };
-
     document.getElementById("sendMessageButtonId").addEventListener("click", () => {
         let jVarLocalToNumber = document.getElementById("sendMessageInputId").value;
-        jFLocalSendMessage(jVarLocalToNumber);
+        let jVarLocalMessage = document.getElementById("sendCutomMessageInputId").value;
+        jFLocalSendMessage(jVarLocalToNumber, jVarLocalMessage);
     });
-
-
-    let jFTest = async () => {
-        let resource = "https://join.keshavsoft.biz/binV4/StudentNames/ShowWithColumns";
-        await fetch(resource);
-    };
-
-
 </script>
 
 <script type="module" src="./Js/sendCutomMessage/WebSocket/EntryFile.js"></script>

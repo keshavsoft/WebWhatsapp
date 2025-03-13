@@ -6,10 +6,12 @@ let jVarLocalUrlForWS;
 
 if (location.protocol === "https:") {
     jVarLocalUrlForWS = "wss://" + jVarLocalHostName;
-}
-if (location.protocol === "http:") {
+} else {
     jVarLocalUrlForWS = "ws://" + jVarLocalHostName;
 }
+
+export let webSocket;
+
 let StartFunc = () => {
     jFLocalEstablishWebSocket();
 };
@@ -17,10 +19,16 @@ let StartFunc = () => {
 let jFLocalEstablishWebSocket = () => {
     webSocket = new WebSocket(jVarLocalUrlForWS);
 
-    webSocket.onopen = onOpen
+    webSocket.onopen = onOpen;
     webSocket.onmessage = onMessage;
 
     webSocket.onclose = function (e) {
+        console.log('WebSocket is closed now.', e.reason);
+    };
+
+    webSocket.onerror = function (err) {
+        console.error('WebSocket encountered error: ', err.message, 'Closing socket');
+        webSocket.close();
     };
 };
 
