@@ -26,27 +26,11 @@
     <button id="sendMessageButtonId">Send Message</button>
 </body>
 
-
-<script type="module">
-    import { webSocket } from './Js/sendCutomMessage/WebSocket/EntryFile.js';
-
-    const jFLocalSendMessage = (inToNumber, inMessage) => {
-        let jVarLocalObjectToServer = {
-            Type: 'WASend',
-            ToMessage: inMessage,
-            ToNumber: inToNumber
-        };
-
-        webSocket.send(JSON.stringify(jVarLocalObjectToServer));
-    };
-
-    document.getElementById("sendMessageButtonId").addEventListener("click", () => {
-        let jVarLocalToNumber = document.getElementById("sendMessageInputId").value;
-        let jVarLocalMessage = document.getElementById("sendCutomMessageInputId").value;
-        jFLocalSendMessage(jVarLocalToNumber, jVarLocalMessage);
-    });
+<script>
+    let webSocket;
 </script>
 
 <script type="module" src="./Js/sendCutomMessage/WebSocket/EntryFile.js"></script>
+<script type="module" src="./Js/sendCutomMessage/entryFile.js"></script>
 
 </html>

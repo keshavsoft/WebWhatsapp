@@ -8,9 +8,7 @@ if (location.protocol === "https:") {
     jVarLocalUrlForWS = "wss://" + jVarLocalHostName;
 } else {
     jVarLocalUrlForWS = "ws://" + jVarLocalHostName;
-}
-
-export let webSocket;
+};
 
 let StartFunc = () => {
     jFLocalEstablishWebSocket();
