@@ -38,7 +38,6 @@ app.get('/KStudents', async (req, res) => {
     res.json(data);
 });
 
-
 StartFuncKWSServer(server, client);
 
 function normalizePort(val) {

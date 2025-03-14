@@ -50,15 +50,6 @@ const jFLocalHandleQrCode = ({ inQrReceived }) => {
     };
 };
 
-let jFLocalToInputShowDateId = (inValue) => {
-    let jVarLocalHtmlId = 'ShowDateId';
-    let jVarLocalShowDateId = document.getElementById(jVarLocalHtmlId);
-
-    if (jVarLocalShowDateId === null === false) {
-        jVarLocalShowDateId.innerHTML = inValue;
-    };
-};
-
 let jFCreateQrCode = ({ inQrCode }) => {
     let canvas = document.getElementById("CanvasId");
     const jVarLocalPresentQrCode = canvas.dataset.QrCode;

@@ -1,0 +1,24 @@
+{
+    "showPaginationSwitch": "true",
+    "pagination": "true",
+    "pageList": "[5, 25, 50, all]",
+    "pageSize": 5,
+    "checkboxHeader": "true",
+    "data": [],
+    "columns": [
+        {
+            "field": "KS-Serial",
+            "title": "#",
+            "formatter": ""
+        },
+        {
+            "field": "Mobile",
+            "title": "Mobile"
+        },
+        {
+            "field": "KS-Select",
+            "title": "Select",
+            "checkbox": true
+        }
+    ]
+}

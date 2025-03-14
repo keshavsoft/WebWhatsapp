@@ -8,7 +8,10 @@ import { StartFunc as StartFuncFromQrCodeGenerated } from "../qrCodeGenerated.js
 import { startFunc as clientInfoFunc, readFunc } from "../clientInfo.js";
 
 const StartFunc = async ({ inClient, inReponse }) => {
-    let client = inClient;
+    // let client = inClient;
+
+    let client;
+
     let res = inReponse;
 
     client = new Client({

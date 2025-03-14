@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
+    "start": "node app",
+    "WA": "vite build --config vite.config-WA.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,18 @@
     "express": "^4.18.3",
     "qrcode": "^1.5.4",
     "whatsapp-web.js": "^1.26.0"
+  },
+  "devDependencies": {
+    "@sweetalert2/theme-dark": "^5.0.27",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "feather-icons": "^4.29.2",
+    "perfect-scrollbar": "^1.5.6",
+    "sass": "^1.85.1",
+    "sass-loader": "^16.0.5",
+    "sweetalert2": "^11.17.2",
+    "vite": "^6.2.2",
+    "vite-plugin-nunjucks": "^0.2.0",
+    "vite-plugin-static-copy": "^2.3.0"
   }
 }
