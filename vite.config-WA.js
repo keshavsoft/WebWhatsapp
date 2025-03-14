@@ -6,7 +6,7 @@ import nunjucks from 'vite-plugin-nunjucks'
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 const srcFolder = "src-WA";
-const distFolder = "public/WA";
+const distFolder = "publicDir/WA";
 
 import sidebarItems from "./src-WA/sidebar-items.json";
 import horizontalMenuItems from "./src-WA/horizontal-menu-items.json";

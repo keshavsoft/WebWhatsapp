@@ -1,3 +1,5 @@
+const jVarCommonSuccessUrl = "WA/sendMessage.html";
+
 let StartFunc = (event) => {
     let jVarLocalCurrentTarget = event.currentTarget;
 
@@ -11,9 +13,11 @@ let StartFunc = (event) => {
         switch (jVarLocalParse?.Type) {
             case "wAProfile":
                 wAProfile({ inData: jVarLocalParse.res, inWs: jVarLocalCurrentTarget });
+
                 break;
             case "QrCodeGenerated":
                 jFLocalHandleQrCode({ inQrReceived: jVarLocalParse.res });
+
                 break;
             default:
                 break;
@@ -34,7 +38,8 @@ const wAProfile = ({ inData, inWs }) => {
 
         KSIntervalId = null;
 
-        location.href = "sendMessage.html";
+        // location.href = "sendMessage.html";
+        location.href = jVarCommonSuccessUrl;
     };
 
     // jFLocalToInputUserNameId(inData.pushname);
