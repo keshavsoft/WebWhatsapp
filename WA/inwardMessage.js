@@ -1,3 +1,5 @@
+import { JSONFilePreset } from 'lowdb/node'
+
 import Whatsapp from 'whatsapp-web.js';
 const { MessageMedia } = Whatsapp;
 
@@ -6,7 +8,18 @@ const StartFunc = async msg => {
     const LocalFromNumber = LocalReplaceUs.replace("91", '');
     const LocalFromFetch = await LocalFuncFetchData(LocalFromNumber);
 
-    console.log("aaaaaaaaaa : ", msg.body, LocalFromFetch, LocalFromNumber, LocalFromFetch.length);
+    // console.log("aaaaaaaaaa : ", msg.body, LocalFromFetch, LocalFromNumber, LocalFromFetch.length);
+
+    const defaultData = [];
+    // const db = await JSONFilePreset('Data/inward.json', defaultData)
+    const db = await JSONFilePreset('Data/inwards.json', defaultData);
+
+    await db.update(({ posts }) => posts.push({
+        FromNumber: msg.from,
+        MessageRec: msg.body
+    }));
+
+    console.log("aaaaaaaaaa : ", db.data);
 
     if (LocalFromFetch.length > 0) {
         msg.reply('You are already registered with us');

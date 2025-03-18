@@ -1,6 +1,7 @@
 node_modules/
 
 publicDir/
+Data/
 
 .env
 
